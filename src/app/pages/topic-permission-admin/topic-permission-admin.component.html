@@ -1,0 +1,90 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold mb-6">主題權限管理</h2>
+  <table class="w-full table-auto border-collapse bg-white shadow rounded">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="px-3 py-2 border">主題名稱</th>
+        <th class="px-3 py-2 border">可讀</th>
+        <th class="px-3 py-2 border">可新增</th>
+        <th class="px-3 py-2 border">可編輯</th>
+        <th class="px-3 py-2 border">可刪除</th>
+        <th class="px-3 py-2 border">分配明細</th>
+        <th class="px-3 py-2 border">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let topic of topics">
+        <td class="border px-3 py-2">{{ topic.name }}</td>
+        <td class="border px-3 py-2 text-center">
+          <span *ngIf="hasPermission(topic, 'READ')">✔️</span>
+        </td>
+        <td class="border px-3 py-2 text-center">
+          <span *ngIf="hasPermission(topic, 'CREATE')">✔️</span>
+        </td>
+        <td class="border px-3 py-2 text-center">
+          <span *ngIf="hasPermission(topic, 'EDIT')">✔️</span>
+        </td>
+        <td class="border px-3 py-2 text-center">
+          <span *ngIf="hasPermission(topic, 'DELETE')">✔️</span>
+        </td>
+        <td class="border px-3 py-2">
+          <div *ngFor="let perm of topic.permissions">
+            <span class="font-bold">{{ perm.permissionType }}：</span>
+            <span *ngIf="perm.users.length > 0"
+              >👤{{ perm.users.join(", ") }}</span
+            >
+            <span *ngIf="perm.groups.length > 0"
+              >（群組：{{ perm.groups.join(", ") }}）</span
+            >
+          </div>
+        </td>
+        <td class="border px-3 py-2">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white rounded px-3 py-1"
+            (click)="editPermissions(topic)"
+          >
+            編輯
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 編輯 Dialog -->
+  <div
+    *ngIf="editingTopic"
+    class="fixed inset-0 bg-black/40 flex items-center justify-center z-50"
+  >
+    <div class="bg-white p-6 rounded-lg w-[420px] shadow-lg">
+      <h3 class="text-lg font-bold mb-3">
+        編輯「{{ editingTopic?.name }}」權限
+      </h3>
+      <div class="mb-3" *ngFor="let permType of permissionTypes">
+        <label class="font-semibold">{{ permType }}：</label>
+        <input
+          type="text"
+          class="border p-1 rounded w-full"
+          placeholder="輸入使用者名稱(,分隔)"
+          [(ngModel)]="editBuffer[asPermType(permType)].usersStr"
+        />
+        <input
+          type="text"
+          class="border p-1 rounded w-full mt-1"
+          placeholder="輸入群組名稱(,分隔)"
+          [(ngModel)]="editBuffer[asPermType(permType)].groupsStr"
+        />
+      </div>
+      <div class="flex gap-2 mt-4 justify-end">
+        <button class="bg-gray-300 px-3 py-1 rounded" (click)="cancelEdit()">
+          取消
+        </button>
+        <button
+          class="bg-green-600 text-white px-3 py-1 rounded"
+          (click)="saveEdit()"
+        >
+          儲存
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

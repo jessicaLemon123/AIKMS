@@ -1,0 +1,9 @@
+.page{ display:grid; grid-template-columns: 420px 1fr; gap:24px; }
+.left .toolbar{ display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+.left .search{ flex:1; }
+.text-right{ text-align:right; }
+td.active{ font-weight:600; }
+.right .right-toolbar{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+@media (max-width: 960px) {
+  .page{ grid-template-columns: 1fr; }
+}

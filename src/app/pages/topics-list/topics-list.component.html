@@ -1,0 +1,79 @@
+<div
+  class="relative flex size-full min-h-screen flex-col bg-white group/design-root overflow-x-hidden"
+  style="font-family: Inter, 'Noto Sans', sans-serif"
+>
+  <div class="layout-container flex h-full grow flex-col">
+    <div class="px-40 flex flex-1 justify-center py-5">
+      <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+        <div class="flex flex-wrap justify-between gap-3 p-4">
+          <p
+            class="text-[#111418] tracking-light text-[32px] font-bold leading-tight min-w-72"
+          >
+            Topic List
+          </p>
+        </div>
+        <ng-container *ngIf="loading">載入中...</ng-container>
+        <ng-container *ngIf="!loading && topics.length === 0">
+          <div class="p-4 text-gray-500">目前沒有主題</div>
+        </ng-container>
+
+        <ng-container *ngIf="!loading && topics.length > 0">
+          <ng-container *ngFor="let topic of topics">
+            <div class="p-4 @container">
+              <div
+                class="flex flex-col items-stretch justify-start rounded-lg @xl:flex-row @xl:items-start shadow-[0_0_4px_rgba(0,0,0,0.1)] bg-white"
+              >
+                <!-- 這裡若主題有圖片可放，沒圖片可隱藏或放預設圖 -->
+
+                <div
+                  class="flex w-full min-w-72 grow flex-col items-stretch justify-center gap-1 py-4 @xl:px-4 px-4"
+                >
+                  <p
+                    class="text-[#111418] text-lg font-bold leading-tight tracking-[-0.015em]"
+                  >
+                    {{ topic.name }}
+                  </p>
+                  <div class="flex items-end gap-3 justify-between">
+                    <p
+                      class="text-[#60728a] text-base font-normal leading-normal"
+                    >
+                      {{ topic.description }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 細項（Article List） -->
+            <ng-container *ngIf="topic.articles && topic.articles.length > 0">
+              <div
+                *ngFor="let article of topic.articles"
+                class="flex items-center gap-4 bg-white px-4 min-h-14 justify-between"
+              >
+                <a
+                  class="text-[#111418] text-base font-normal leading-normal flex-1 truncate hover:underline"
+                  [routerLink]="['/articles', article.id]"
+                >
+                  {{ article.title }}
+                </a>
+                <div class="shrink-0">
+                  <div
+                    class="text-[#111418] flex size-7 items-center justify-center"
+                    data-icon="ArrowRight"
+                    data-size="24px"
+                    data-weight="regular"
+                  >
+                    <!-- 右箭頭 SVG ... -->
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="topic.articles && topic.articles.length === 0">
+              <div class="px-4 py-2 text-gray-400 text-sm">目前沒有細項</div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>

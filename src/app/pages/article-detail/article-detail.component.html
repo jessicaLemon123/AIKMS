@@ -1,0 +1,16 @@
+<div *ngIf="article as a">
+  <h1 class="text-2xl font-bold mb-2">{{ a.title }}</h1>
+  <div class="flex flex-col text-gray-500 mb-4 gap-1 text-sm">
+    <span>
+      作者：
+      <span *ngIf="a.id; else onlyId">{{ a.id }}</span>
+      <ng-template #onlyId>ID {{ a.authorId }}</ng-template>
+    </span>
+    <span>建立日期：{{ a.createdAt | date : "yyyy-MM-dd HH:mm" }}</span>
+    <span>更新日期：{{ a.updatedAt | date : "yyyy-MM-dd HH:mm" }}</span>
+    <span>主題分類：{{ a.topic?.name || "未分類" }}</span>
+  </div>
+  <div class="markdown-body">
+    <markdown [data]="a.content || ''"></markdown>
+  </div>
+</div>

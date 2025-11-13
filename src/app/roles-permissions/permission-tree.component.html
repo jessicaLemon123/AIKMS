@@ -1,0 +1,13 @@
+<div class="toolbar">
+  <button type="button" class="link" (click)="selectAll()">全選</button>
+  <span class="dot">·</span>
+  <button type="button" class="link" (click)="clearAll()">全不選</button>
+</div>
+
+<div class="perms">
+  <div class="perm" *ngFor="let p of permissions; trackBy: trackPerm">
+    <mat-checkbox [checked]="isChecked(p.id)" (change)="onToggle($event, p.id)">
+      {{ p.name }}
+    </mat-checkbox>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+/* styles.css (全域) 或 component 專屬 scss 皆可 */
+.markdown-body pre {
+  background: #f5f7fa;
+  border-radius: 8px;
+  padding: 1em;
+  font-size: 0.97em;
+  overflow-x: auto;
+  margin: 1em 0;
+  border: 1px solid #e2e8f0;
+}
+
+.markdown-body code {
+  background: #f5f7fa;
+  border-radius: 4px;
+  padding: 0.15em 0.3em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* 只針對 <pre><code> 的情境 */
+.markdown-body pre code {
+  background: transparent; /* 防止雙層底色 */
+  padding: 0;
+  font-size: inherit;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

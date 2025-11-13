@@ -1,0 +1,76 @@
+<div class="max-w-2xl mx-auto p-8">
+  <h2 class="text-2xl font-bold mb-4">主題管理</h2>
+  <div class="mb-4 flex gap-2">
+    <input
+      class="border p-2 rounded flex-1"
+      [(ngModel)]="newTopic.name"
+      placeholder="主題名稱"
+    />
+    <input
+      class="border p-2 rounded flex-1"
+      [(ngModel)]="newTopic.description"
+      placeholder="主題說明"
+    />
+    <button
+      class="bg-blue-600 text-white px-4 py-2 rounded"
+      (click)="addTopic()"
+    >
+      新增
+    </button>
+  </div>
+
+  <table class="w-full table-auto border">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="p-2">名稱</th>
+        <th class="p-2">說明</th>
+        <th class="p-2">操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let topic of topics">
+        <td class="p-2">
+          <div *ngIf="editing && editing.id === topic.id; else showName">
+            <input class="border p-1 rounded" [(ngModel)]="editing.name" />
+          </div>
+          <ng-template #showName>{{ topic.name }}</ng-template>
+        </td>
+        <td class="p-2">
+          <div *ngIf="editing && editing.id === topic.id; else showDesc">
+            <input
+              class="border p-1 rounded"
+              [(ngModel)]="editing.description"
+            />
+          </div>
+          <ng-template #showDesc>{{ topic.description }}</ng-template>
+        </td>
+        <td class="p-2 flex gap-2">
+          <button
+            *ngIf="editing?.id !== topic.id"
+            class="text-blue-600"
+            (click)="editTopic(topic)"
+          >
+            編輯
+          </button>
+          <button
+            *ngIf="editing?.id === topic.id"
+            class="text-green-600"
+            (click)="saveEdit()"
+          >
+            儲存
+          </button>
+          <button
+            *ngIf="editing?.id === topic.id"
+            class="text-gray-400"
+            (click)="cancelEdit()"
+          >
+            取消
+          </button>
+          <button class="text-red-600" (click)="deleteTopic(topic.id)">
+            刪除
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

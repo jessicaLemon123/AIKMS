@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>
+  {{ data?.mode === "create" ? "新增角色" : "編輯角色" }}
+</h2>
+<form [formGroup]="form" class="dialog-form" (ngSubmit)="submit()">
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>名稱</mat-label>
+    <input matInput formControlName="name" maxlength="50" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-full">
+    <mat-label>描述（選填）</mat-label>
+    <input matInput formControlName="description" maxlength="120" />
+  </mat-form-field>
+
+  <div class="actions">
+    <button mat-button type="button" (click)="dialogRef.close()">取消</button>
+    <button
+      mat-flat-button
+      color="primary"
+      type="submit"
+      [disabled]="form.invalid"
+    >
+      確定
+    </button>
+  </div>
+</form>
